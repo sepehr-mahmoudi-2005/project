@@ -17,7 +17,7 @@ displayError(DISPLAY_ERROR);
 
 
 // reserve addresses
-uri('admin/category//s', 'Category', 'index');
+uri('admin/category/{id}', 'Category', 'index');
 uri('admin/category/store', 'Category', 'store', 'POST');
 
 //
@@ -111,17 +111,42 @@ function uri(
     $currentUrl = explode('?', currentUrl())[0];
     $currentUrl = str_replace(BASE_URL, '', $currentUrl);
     $currentUrl = trim($currentUrl, '/ ');
+
     $currentUrlArray = explode('/', $currentUrl);
     $currentUrlArray = array_filter($currentUrlArray);
+    $currentUrlArray = array_values($currentUrlArray);
 
     $reservedUrl = trim($reservedUrl, '/ ');
+
     $reservedUrlArray = explode('/', $reservedUrl);
     $reservedUrlArray = array_filter($reservedUrlArray);
+    $reservedUrlArray = array_values($reservedUrlArray);
+
 
     if (
-        count(array_diff($currentUrlArray, $reservedUrlArray)) === 0
+        count($currentUrlArray) !== count($reservedUrlArray)
     ) {
-        echo 'yep!';
-        die;
+        return;
     }
+
+    $parameters = [];
+    for ($i = 0; $i < count($reservedUrlArray); $i++) {
+        if (preg_match('/{.+}/i', $reservedUrlArray[$i], $matches)) {
+            $parameters[$matches[0]] = $currentUrlArray[$i];
+        } elseif ($reservedUrlArray[$i] !== $currentUrlArray[$i]) {
+            return;
+        }
+    }
+
+    if ($requestMethod === 'POST') {
+        $request = isset($_FILES)
+            ? array_merge($_POST, $_FILES)
+            : $_POST;
+
+        $parameters = array_merge([$request], $parameters);
+    }
+
+    $object = new $class;
+    call_user_func_array([$object, $method], $parameters);
+    die;
 }
