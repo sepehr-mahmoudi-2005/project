@@ -15,6 +15,11 @@ const DB_PASSWORD = '';
 // display errors
 displayError(DISPLAY_ERROR);
 
+
+// reserve addresses
+uri('admin/category//s', 'Category', 'index');
+uri('admin/category/store', 'Category', 'store', 'POST');
+
 //
 // helpers
 
@@ -28,6 +33,14 @@ function protocol()
 function currentDomain()
 {
     return protocol() . $_SERVER['HTTP_HOST'];
+}
+
+function dd(mixed $data)
+{
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
+    die;
 }
 
 function asset(string $src)
@@ -83,5 +96,32 @@ function flash(string $name, ?string $message = null)
             : '';
     } else {
         $_SESSION[FLASH][$name] = $message;
+    }
+}
+
+function uri(
+    string $reservedUrl,
+    string $class,
+    string $method,
+    string $requestMethod = 'GET'
+) {
+    if (requestMethod() !== $requestMethod)
+        return;
+
+    $currentUrl = explode('?', currentUrl())[0];
+    $currentUrl = str_replace(BASE_URL, '', $currentUrl);
+    $currentUrl = trim($currentUrl, '/ ');
+    $currentUrlArray = explode('/', $currentUrl);
+    $currentUrlArray = array_filter($currentUrlArray);
+
+    $reservedUrl = trim($reservedUrl, '/ ');
+    $reservedUrlArray = explode('/', $reservedUrl);
+    $reservedUrlArray = array_filter($reservedUrlArray);
+
+    if (
+        count(array_diff($currentUrlArray, $reservedUrlArray)) === 0
+    ) {
+        echo 'yep!';
+        die;
     }
 }
