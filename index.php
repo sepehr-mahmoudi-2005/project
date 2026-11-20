@@ -110,13 +110,14 @@ function uri(
 
     $currentUrl = explode('?', currentUrl())[0];
     $currentUrl = str_replace(BASE_URL, '', $currentUrl);
-    $currentUrl = trim($currentUrl, '/ ');
+    $currentUrl = trim($currentUrl, '/');
+
 
     $currentUrlArray = explode('/', $currentUrl);
     $currentUrlArray = array_filter($currentUrlArray);
     $currentUrlArray = array_values($currentUrlArray);
 
-    $reservedUrl = trim($reservedUrl, '/ ');
+    $reservedUrl = trim($reservedUrl, '/');
 
     $reservedUrlArray = explode('/', $reservedUrl);
     $reservedUrlArray = array_filter($reservedUrlArray);
@@ -131,8 +132,8 @@ function uri(
 
     $parameters = [];
     for ($i = 0; $i < count($reservedUrlArray); $i++) {
-        if (preg_match('/{.+}/i', $reservedUrlArray[$i], $matches)) {
-            $parameters[$matches[0]] = $currentUrlArray[$i];
+        if (preg_match('/{(.+)}/i', $reservedUrlArray[$i], $matches)) {
+            $parameters[$matches[1]] = $currentUrlArray[$i];
         } elseif ($reservedUrlArray[$i] !== $currentUrlArray[$i]) {
             return;
         }
