@@ -1,5 +1,7 @@
 <?php
 
+use database\Database;
+
 session_start();
 
 //
@@ -11,10 +13,14 @@ const DB_HOST = 'localhost';
 const DB_NAME = 'project';
 const DB_USERNAME = 'root';
 const DB_PASSWORD = '';
+const DB_CHARSET = "utf8mb4";
+const DB_OPTIONS = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+];
 
 // display errors
 displayError(DISPLAY_ERROR);
-
 
 // reserve addresses
 uri('admin/category/{id}', 'Category', 'index');
