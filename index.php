@@ -6,18 +6,18 @@ session_start();
 
 //
 // config
-const BASE_PATH = __DIR__;
+define('BASE_PATH', __DIR__);
 define('BASE_URL', currentDomain() . '/project/');
-const DISPLAY_ERROR = true;
-const DB_HOST = 'localhost';
-const DB_NAME = 'project';
-const DB_USERNAME = 'root';
-const DB_PASSWORD = '';
-const DB_CHARSET = "utf8mb4";
-const DB_OPTIONS = [
+define('DISPLAY_ERROR', true);
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'project');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_CHARSET', "utf8mb4");
+define('DB_OPTIONS', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-];
+]);
 
 // display errors
 displayError(DISPLAY_ERROR);
