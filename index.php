@@ -19,6 +19,8 @@ define('DB_OPTIONS', [
 
 // 
 // class include
+require_once 'database/Database.php';
+require_once 'activities/Admin/Admin.php';
 require_once 'activities/Admin/Category.php';
 
 // display errors
