@@ -17,12 +17,12 @@ define('DB_OPTIONS', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
+// 
+// class include
+require_once 'activities/Admin/Category.php';
+
 // display errors
 displayError(DISPLAY_ERROR);
-
-// reserve addresses
-uri('admin/category/{id}', 'Category', 'index');
-uri('admin/category/store', 'Category', 'store', 'POST');
 
 //
 // helpers
@@ -155,3 +155,17 @@ function uri(
     call_user_func_array([$object, $method], $parameters);
     die;
 }
+
+//
+// reserve addresses
+
+// category
+uri('admin/category', 'Admin\Category', 'index');
+uri('admin/category/create', 'Admin\Category', 'create');
+uri('admin/category/store', 'Admin\Category', 'create', 'POST');
+uri('admin/category/edit/{id}', 'Admin\Category', 'edit');
+uri('admin/category/update/{id}', 'Admin\Category', 'update', 'POST');
+uri('admin/category/delete/{id}', 'Admin\Category', 'delete');
+
+// show 404 if no url match
+echo '404 - Not Found'; 
