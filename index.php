@@ -1,7 +1,5 @@
 <?php
 
-use database\Database;
-
 session_start();
 
 //

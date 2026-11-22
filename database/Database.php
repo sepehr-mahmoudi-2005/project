@@ -8,7 +8,7 @@ use PDOStatement;
 
 class Database
 {
-    private PDO $connection;
+    protected PDO $connection;
 
     function __construct()
     {
