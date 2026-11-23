@@ -1,5 +1,7 @@
 <?php
 
+use database\CreateDB;
+
 session_start();
 
 //
@@ -20,8 +22,14 @@ define('DB_OPTIONS', [
 // 
 // class include
 require_once 'database/Database.php';
+require_once 'database/CreateDB.php';
 require_once 'activities/Admin/Admin.php';
 require_once 'activities/Admin/Category.php';
+
+//
+// Create tables (run it once)
+// $creator = new CreateDB;
+// $creator->run();
 
 // display errors
 displayError(DISPLAY_ERROR);
@@ -164,7 +172,7 @@ function uri(
 // category
 uri('admin/category', 'Admin\Category', 'index');
 uri('admin/category/create', 'Admin\Category', 'create');
-uri('admin/category/store', 'Admin\Category', 'create', 'POST');
+uri('admin/category/store', 'Admin\Category', 'store', 'POST');
 uri('admin/category/edit/{id}', 'Admin\Category', 'edit');
 uri('admin/category/update/{id}', 'Admin\Category', 'update', 'POST');
 uri('admin/category/delete/{id}', 'Admin\Category', 'delete');
